@@ -1,0 +1,76 @@
+﻿@{
+    var players = ViewData["Players"] as List<Player>;
+    var teams = ViewData["Teams"] as List<Team>;
+    var imagem = "invisivel.png";
+    Random random = new Random();
+    var randomNumber = 0;
+
+    var atualTeam = new Team();
+
+
+
+    Team randomTeam(List<Team> allTeams)
+    {
+        randomNumber = random.Next(0, teams.Count);
+        @foreach (var team in allTeams)
+        {
+            if (randomNumber == team.Id)
+            {
+                atualTeam = team;
+            }
+        }
+        return atualTeam;
+    }
+
+    atualTeam = randomTeam(teams);
+}
+
+<h1 class="main-title">Create your dream team </h1>
+
+<div class="faixa">
+    <ul class="positions-list">
+        @{
+            var positions = new List<string>();
+            positions.Add("PG");
+            positions.Add("SG");
+            positions.Add("PF");
+            positions.Add("SF");
+            positions.Add("C");
+            foreach (var position in positions)
+            {
+                <li><div></div><section onclick="chosePlayer('@position')"><img src="~/img/players/@imagem" class="player-box" id="@position"></img></section>@position</li>
+            }
+        }
+    </ul>
+</div>
+
+<div class="box-logo-team">
+
+    <img src="~/img/logo-team/@atualTeam.Img" class="img-logo-team" id="team-logo">
+
+
+    <div class="box-options-players">
+        <label for="country">Player</label>
+        <select id="country" name="country">
+
+            @foreach (var player in @atualTeam.Players)
+            {
+                <option value="@player.Img">@player.Position - @player.Name</option>
+            }
+        </select>
+    </div>
+</div>
+<script>
+        function chosePlayer(id) {
+            var teste = document.getElementById(id).src;
+            if(teste=="https://localhost:7188/img/players/invisivel.png"){
+            var select = document.getElementById('country');
+            var value = select.options[select.selectedIndex].value;
+            document.getElementById(id).src=`/img/players/${value}`;
+            @{
+                   atualTeam = randomTeam(teams);
+            }
+            }
+    }
+
+</script>
