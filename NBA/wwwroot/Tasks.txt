@@ -1,0 +1,2 @@
+﻿-Descobrir como exportar uma função para a Index, da mesma maneira que exportamos uma viewBag, porque os dados est~~ao vindo estáticos
+-criar função que verifica os 5 campos e bloqueia se ele ja tiver sido escolhido
